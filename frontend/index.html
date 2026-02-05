@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agentic Workflow Builder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">⚡</div>
+      <div>
+        <div class="title">Agentic Workflow Builder</div>
+      </div>
+    </div>
+
+    <div class="right">
+      <span class="pill" id="api-pill">API: <span id="api-base-text"></span></span>
+      <button class="btn" id="btn-refresh">Refresh</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- WORKFLOW LIST PAGE -->
+    <section id="page-list" class="page">
+      <div class="section-header">
+        <h2>Workflows</h2>
+        <div class="actions">
+          <button class="btn primary" id="btn-new-workflow">+ New Workflow</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row gap">
+          <input id="new-workflow-name" class="input" placeholder="New workflow name (e.g., My Agentic Flow)" />
+          <button class="btn primary" id="btn-create-workflow">Create</button>
+        </div>
+        <div class="muted small mt-8">
+          Tip: Create → Open → Add steps → Save → Run.
+        </div>
+      </div>
+
+      <div class="card mt-16">
+        <div class="row between">
+          <div class="muted">Saved workflows</div>
+          <div class="muted small" id="wf-count">0</div>
+        </div>
+        <div id="workflow-list" class="list mt-12"></div>
+      </div>
+
+      <!-- ✅ NEW: Run status panel (shows live progress) -->
+      <div class="card mt-16 hidden" id="run-panel">
+        <div class="row between">
+          <div>
+            <div class="name">Run Viewer</div>
+            <div class="muted small" id="run-meta">run_id=—</div>
+          </div>
+          <button class="btn" id="btn-stop-poll">Stop Polling</button>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="grid-2">
+          <div class="kv">
+            <label class="label">Status</label>
+            <div id="run-status" class="pill">—</div>
+          </div>
+          <div class="kv">
+            <label class="label">Current Step</label>
+            <div id="run-current-step" class="pill">—</div>
+          </div>
+        </div>
+
+        <div class="kv mt-12">
+          <label class="label">Latest Output</label>
+          <pre class="output" id="run-output">—</pre>
+        </div>
+        <!-- ✅ NEW: Full step history -->
+        <div class="kv mt-12">
+            <label class="label">Step History</label>
+            <div id="run-steps" class="run-steps mt-8"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKFLOW EDITOR PAGE -->
+    <section id="page-editor" class="page hidden">
+      <div class="section-header">
+        <div>
+          <h2 id="editor-title">Workflow Editor</h2>
+          <div class="muted small" id="editor-subtitle"></div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="btn-back">← Back</button>
+          <button class="btn danger" id="btn-delete-workflow">Delete</button>
+          <button class="btn primary" id="btn-save-workflow">Save</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <label class="label">Workflow Name</label>
+        <input id="editor-name" class="input" placeholder="Workflow name" />
+        <div class="muted small mt-8">
+          Steps are executed by step_order from 1 → N. Use Up/Down to reorder.
+        </div>
+      </div>
+
+      <div class="row between mt-16">
+        <h3>Steps</h3>
+        <button class="btn primary" id="btn-add-step">+ Add Step</button>
+      </div>
+
+      <div id="steps-container" class="steps mt-12"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="muted small">
+      Backend must be running at <code>http://127.0.0.1:8000</code>. CORS enabled ✅
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
